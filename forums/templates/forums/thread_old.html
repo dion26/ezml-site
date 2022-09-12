@@ -1,0 +1,60 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+    .thread-container{
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+    }
+</style>
+<div class="thread-container">
+
+    <div>
+        <h1>{{ thread.name }}</h1>
+        <p>{{ thread.description }}</p>
+        <p>{{ thread.text_fill }}</p>
+
+        <div class="comment-wrapper">
+            <h3>Comments: </h3>
+            <hr>
+            {% for comment in comments %}
+                <div>
+                    {% if request.user == comment.user %}
+                    <a href="">Edit</a>
+                    <a href="{% url 'delete-comment' comment.id %}">Delete</a>
+                    {% endif %}
+                    
+                    <small>@{{comment.user}}, {{comment.created|timesince}} ago</small>
+                    <p>{{comment.body}}</p>
+                    <hr>
+
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if request.user.is_authenticated %}
+        <div class="comment-form">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <input type="text" name="body" placeholder="Write your comment here"/>
+            </form>
+        </div>
+        {%endif%}
+    </div>
+
+    <div>
+        <h3>Other Posts</h3>
+        <hr>
+
+        {% for thr in threads%}
+            <div>
+                <p>{{thr.name}}</p>
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+
+{% endblock %}

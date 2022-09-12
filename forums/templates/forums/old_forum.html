@@ -1,0 +1,28 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<style>
+    .forum-container{
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+    }
+</style>
+
+<div class="forum-container">   
+    <div>
+        {% include 'forums/subforum_component.html'%}
+    </div>
+    
+    <div>
+        <h5>{{thread_count}} Threads</h5>
+        <a href="{% url 'create-thread' %}">Post Thread</a>
+        {% include 'forums/thread_component.html'%}
+    </div>
+
+    <div>
+        {% include 'forums/activity_component.html'%}
+    </div>
+</div>
+
+{% endblock %}

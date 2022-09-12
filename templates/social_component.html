@@ -1,0 +1,30 @@
+{% load static %}
+{% load socialaccount %}
+<div class="social-container">
+    <p>Or join with:</p>
+    <div class="social-buttons">
+        <div class="social-button">
+            <form action="{% provider_login_url 'facebook' %}" method="POST">
+                {% csrf_token %}
+                <button class="btn-social" type="submit">
+                    <img src="{% static 'images/facebook-logo.png'%}"/>
+                </button>
+            </form>
+        </div>
+        <div class="social-button">
+            <form action="{% provider_login_url 'google' %}" method="POST">
+                {% csrf_token %}
+                <button class="btn-social" type="submit">
+                    <img src="{% static 'images/google-logo.png'%}"/>
+                </button>
+            </form>
+        </div><div class="social-button">
+            <form action="{% provider_login_url 'discord' %}" method="POST">
+                {% csrf_token %}
+                <button class="btn-social" type="submit">
+                    <img src="{% static 'images/discord-logo.png'%}"/>
+                </button>
+            </form>
+        </div>
+    </div>  
+</div>

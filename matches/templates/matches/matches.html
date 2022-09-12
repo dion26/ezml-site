@@ -1,0 +1,19 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<h1>Matches template</h1>
+
+<div>
+
+    <div>
+        {% for match in list_match %}
+            <div>
+                <h5>{{match.id}} -- {{match.team1}} vs {{match.team2}} : {{match.score}} | {{match.status}} </h5>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

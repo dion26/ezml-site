@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'styles/upvotejs.css' %}" />
+    
+    <title>{% block head_title %}{%endblock%} </title>
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.min.js"
+      integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+      crossorigin="anonymous">
+    </script>
+    <script src="{% static 'js/upvotejs.vanilla.js' %}"></script>
+  </head>
+
+  <body>
+
+    {% include 'navbar.html' %}
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% block content %}
+
+    {% endblock %}
+
+    <script src="{% static 'js/script.js' %}"></script>
+  
+  </body>
+</html>
