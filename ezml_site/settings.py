@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
 
-    'ckeditor'
+    'ckeditor',
+    'django_countries'
 ]
 
 AUTH_USER_MODEL = 'base.User'
