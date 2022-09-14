@@ -12,4 +12,6 @@ class Player(models.Model):
     # Match history
     # links twitch/twitter/youtube
     # form history (hltv)
-    
+    def __str__(self):
+        return self.nickname
+

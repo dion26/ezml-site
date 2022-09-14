@@ -1,3 +1,6 @@
 from django.shortcuts import render
+from players.models import Player
+from django.views.generic.detail import DetailView
 
-# Create your views here.
+class PlayerDetailView(DetailView):
+    model = Player
