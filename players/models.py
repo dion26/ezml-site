@@ -3,9 +3,16 @@ from django_countries.fields import CountryField
 
 # Create your models here.
 class Player(models.Model):
-    nickname = models.CharField(max_length=100)
-    fullname = models.CharField(max_length=100, blank=True, null=True)
+    ROLE = (
+        ('P', 'Player'),
+        ('A', 'Analyst'),
+        ('C', 'Coach'),
+        ('S', 'Caster'),
+    )
+    nickname = models.CharField(max_length=60)
+    fullname = models.CharField(max_length=60, blank=True, null=True)
     country = CountryField(blank=True, null=True)
+    role = models.CharField(max_length=1, choices=ROLE, default='P')
     # team =
     # past teams =
     # Heros
