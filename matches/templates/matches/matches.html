@@ -2,18 +2,10 @@
 
 {% block content %}
 
+{% load static %}
 <h1>Matches template</h1>
 
-<div>
-
-    <div>
-        {% for match in list_match %}
-            <div>
-                <h5>{{match.id}} -- {{match.team1}} vs {{match.team2}} : {{match.score}} | {{match.status}} </h5>
-            </div>
-        {% endfor %}
-    </div>
-
-</div>
+<div id="root" />
+<script src="{% static 'js/index-bundle.js' %}"></script>
 
 {% endblock %}

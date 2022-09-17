@@ -8,8 +8,9 @@ liquipy_object = liquipediapy('ezml', 'mobilelegends')
 ml_obj = mobilelegends('ezml')
 teams = ml_obj.get_teams()
 
-with open('../teams/fixtures/team_data.json', 'w', encoding='utf-8') as f:
-        json.dump(teams, f)
+def push_teams():
+    with open('../teams/fixtures/team_data.json', 'w', encoding='utf-8') as f:
+            json.dump(teams, f)
 
 # manage.py loaddata <fixturename>
 def push_players():
@@ -19,4 +20,5 @@ def push_players():
     with open('../players/fixtures/player_data.json', 'w', encoding='utf-8') as f:
         json.dump(players, f)
 
+push_players()
 
