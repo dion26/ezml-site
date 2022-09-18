@@ -7,14 +7,8 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import { FC, useState } from 'react';
 import Switch from '@mui/material/Switch';
-
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.background2.main : theme.palette.background2.dark,
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
+import MatchList from '../../components/MatchList';
+import { Typography, Divider } from '@mui/material';
 
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
@@ -29,8 +23,11 @@ const Master = () => {
             <MenuDrawer/>
         </Grid>
         <Grid item xs={4}>
-          <SearchBox search={search} setSearch={setSearch}/>
-          <Box height="85vh" display="flex" flexDirection="column">
+          <Box height="13vh">
+            <SearchBox search={search} setSearch={setSearch}/>
+          </Box>
+          
+          <Box height="87vh" display="flex" flexDirection="column">
             <Box flex={1} overflow="auto">
                 <MainCard/>
                 <MainCard/>
@@ -40,11 +37,39 @@ const Master = () => {
             </Box>
           </Box>
         </Grid>
+
         <Grid item xs={3}>
-        <Switch {...label} />
+          <Box height="13vh">
+            <Switch {...label} sx={{
+              marginTop: "24px",
+              float: "right"
+            }}/>
+          </Box>
+          <Box height="87vh" display="flex" flexDirection="column">
+            <Box flex={1} overflow="auto">
+              <Typography variant='button'>
+                Upcoming Matches
+              </Typography>
+              <Divider variant='fullWidth'/>
+              <MatchList />
+              <MatchList />
+              <MatchList />
+              <MatchList />
+              <MatchList />
+              <Typography variant='button'>
+                Recent Result
+              </Typography>
+              <Divider variant='fullWidth'/>
+              <MatchList />
+              <MatchList />
+              <MatchList />
+              <MatchList />
+              <MatchList />
+            </Box>
+          </Box>
         </Grid>
+
         <Grid item xs={2}>
-          <Item>Recent</Item>
         </Grid>
       </Grid>
     // </Box>

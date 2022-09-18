@@ -80,8 +80,6 @@ export default function PermanentDrawerLeft() {
     ];
     const theme = useTheme();
 
-
-
   return (
     <Box 
         sx={{ gap: 0,
@@ -107,7 +105,10 @@ export default function PermanentDrawerLeft() {
         {competitiveCategory.map(({id, children}) => (
         <List key={id} subheader={
             <ListSubheader component="div">
-                {id}
+                <Typography variant='button'>
+                    {id}
+                </Typography>
+                
             </ListSubheader>}>
             {children.map(({id: childId, icon}) => (
                 <ListItem disablePadding key={childId}>
@@ -125,7 +126,9 @@ export default function PermanentDrawerLeft() {
         {communityCategory.map(({id, children}) => (
         <List key={id} subheader={
             <ListSubheader component="div">
-                {id}
+                <Typography variant='button'>
+                    {id}
+                </Typography>
             </ListSubheader>}>
             {children.map(({id: childId, icon}) => (
                 <ListItem disablePadding key={childId}>
@@ -143,7 +146,9 @@ export default function PermanentDrawerLeft() {
         {strategyCategory.map(({id, children}) => (
         <List key={id} subheader={
             <ListSubheader component="div">
-                {id}
+                <Typography variant='button'>
+                    {id}
+                </Typography>
             </ListSubheader>}>
             {children.map(({id: childId, icon}) => (
                 <ListItem disablePadding key={childId}>
