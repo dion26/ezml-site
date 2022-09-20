@@ -42,7 +42,7 @@ class ml_player():
 				countries = info_boxes[i+1].find_all('a')
 				for country in countries:
 					player_countries.append(country.get_text())
-				player_countries = [country for country in player_countries if len(country)>0]	
+				player_countries = [country for country in player_countries if len(country)>0]
 				player['countries'] = player_countries
 			elif attribute == 'Birth':
 				player['birth_details'] = unicodedata.normalize("NFKD",info_boxes[i+1].get_text())
@@ -64,7 +64,7 @@ class ml_player():
 				player['games'] = games	
 			else:
 				attribute = attribute.lower().replace('(', '').replace(')', '').replace(' ','_')
-				player[attribute] = info_boxes[i+1].get_text().rstrip()
+				player[attribute] = unicodedata.normalize("NFKD", info_boxes[i+1].get_text().rstrip()).strip()
 	
 		return player
 
@@ -85,11 +85,11 @@ class ml_player():
 		player_history = []
 		histories = soup.find_all('div', class_='infobox-center')
 		try:
-			histories = histories[-1].find_all('div', recursive=False)
+			histories = histories[-1].find_all("tr")
 		except (IndexError,AttributeError):	
 			return player_history
 		for history in histories:
-			teams_info = history.find_all('div')
+			teams_info = history.find_all('td')
 			if len(teams_info) > 1:
 				team = {}
 				team['duration'] = teams_info[0].get_text()
@@ -101,12 +101,15 @@ class ml_player():
 	def get_player_achivements(self,soup):
 		achivements = []
 		try:
-			rows = soup.find('table',class_='table-striped').find_all('tr')
+			rows = soup.find('table',class_='wikitable-striped').find_all('tr')
 		except AttributeError:
 			return achivements
-		rows = [row for row in rows if len(row)>10]
+		
+		rows = [row for row in rows if len(row)>6]
+		
 		if len(rows) == 0:
 			return achivements
+
 		indexes = rows[0]	
 		index_values = []
 		for cell in indexes.find_all('th'):
@@ -114,16 +117,18 @@ class ml_player():
 		rows = rows[1:]
 		index_values.insert(3,'game')
 		index_values.insert(-1,'opponent')
+
 		for row in rows:
 			achivement={}
 			cells = row.find_all('td')
+	
 			for i in range(0,len(cells)):
 				try:
 					key = index_values[i]
 					value = cells[i].get_text().rstrip()
 					if key == "Date":
 						value = cells[i].find(text=True)
-					elif key == "Placement":
+					elif key == "Place":
 						value = re.sub('[A-Za-z]','',cells[i].get_text())
 					elif key == "Tier":	
 						value = cells[i].find('a').find(text=True).rstrip()
@@ -136,6 +141,7 @@ class ml_player():
 				else:
 					value = unicodedata.normalize("NFKD",value.rstrip())					
 					achivement[key] = value
+		
 			if len(achivement) > 0:		
 				achivements.append(achivement)
 

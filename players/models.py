@@ -1,9 +1,15 @@
-from django.db import models
+from email.policy import default
+from operator import truediv
+from django.db import models, IntegrityError
 from django_countries.fields import CountryField
 from django.utils.text import slugify
 import random
 
 # Create your models here.
+
+class Position(models.Model):
+    name = models.CharField(unique=True, primary_key=True, max_length=30)
+
 class Player(models.Model):
     ROLE = (
         ('P', 'Player'),
@@ -11,17 +17,24 @@ class Player(models.Model):
         ('C', 'Coach'),
         ('S', 'Caster'),
     )
-    nickname = models.CharField(max_length=60)
+    STATUS = (
+        ('A', 'Active'),
+        ('R', 'Retired'),
+        ('I', 'Inactive'),
+        ('L', 'Loan'),
+    )
+    nickname = models.CharField(max_length=60, unique=True)
     fullname = models.CharField(max_length=60, blank=True, null=True)
     country = CountryField(blank=True, null=True)
     role = models.CharField(max_length=1, choices=ROLE, default='P')
     slug = models.SlugField(null=True)
-    # team =
-    # past teams =
-    # Heros
-    # Match history
-    # links twitch/twitter/youtube
-    # form history (hltv)
+    image = models.ImageField(default="avatar.svg")
+    position = models.ManyToManyField(Position, related_name="players", blank=True)
+    dob = models.DateField(null=True, blank=True)
+    alternate_ids = models.CharField(null=True, blank=True, max_length=300)
+    earning = models.IntegerField(null=True, blank=True)
+    status = models.CharField(max_length=1, choices=STATUS, default='A')
+
     def __str__(self):
         return self.nickname
 
@@ -34,4 +47,13 @@ class Player(models.Model):
                 r_num = random.randint(0, 100)
                 self.slug = slugify(''.join(self.nickname, str(r_num)))
                 return super(Player, self).save(*args, **kwargs)
+
+
+class SocialMedia(models.Model):
+    owner = models.OneToOneField(Player, on_delete=models.CASCADE, related_name="social")
+    youtube = models.URLField(blank=True, null=True)
+    tiktok = models.URLField(blank=True, null=True)
+    vk = models.URLField(blank=True, null=True)
+    facebook = models.URLField(blank=True, null=True)
+
 

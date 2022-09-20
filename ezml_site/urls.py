@@ -16,6 +16,7 @@ urlpatterns = [
     path('teams/', include('teams.urls')),
 
     path('accounts/', include('allauth.urls')),
+    path('api/', include('api.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

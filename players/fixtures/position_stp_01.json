@@ -1,0 +1,1 @@
+[{"model": "players.position", "pk": "Exp Laner", "fields": {}}, {"model": "players.position", "pk": "Gold Laner", "fields": {}}, {"model": "players.position", "pk": "Jungler", "fields": {}}, {"model": "players.position", "pk": "Mid Laner", "fields": {}}, {"model": "players.position", "pk": "Roamer", "fields": {}}]

@@ -10,6 +10,10 @@ from django.urls import reverse, reverse_lazy
 from .models import FavoriteThread, Thread, Subforum, Comment, LikeThread, DisLikeThread
 from .forms import ThreadForm
 
+# rest framework
+from rest_framework import generics, permissions, authentication
+from .serializers import ThreadSerializer
+
 
 class UpdateLikeMixin:
     def update_status(self, thread, action):
@@ -231,3 +235,43 @@ def topicsPage(request):
 def activityPage(request):
     thread_comments = Comment.objects.all()
     return render(request, 'forums/activity.html', {'thread_comments':thread_comments})
+
+class ThreadDetailAPIView(generics.RetrieveAPIView):
+    queryset = Thread.objects.all()
+    serializer_class = ThreadSerializer
+
+class ThreadListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Thread.objects.all()
+    serializer_class = ThreadSerializer
+    authentication_classes = [
+        authentication.SessionAuthentication,
+        authentication.TokenAuthentication,
+    ]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(host=self.request.user)
+        # serializer.save()
+
+class ThreadListAPIView(generics.RetrieveAPIView):
+    '''
+    Not Used
+    '''
+    queryset = Thread.objects.all()
+    serializer_class = ThreadSerializer
+
+class ThreadUpdateAPIView(generics.UpdateAPIView):
+    queryset = Thread.objects.all()
+    serializer_class = ThreadSerializer
+    lookup_field = 'pk'
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+
+class ThreadDeleteAPIView(generics.DestroyAPIView):
+    queryset = Thread.objects.all()
+    serializer_class = ThreadSerializer
+    lookup_field = 'pk'
+
+    def perform_destroy(self, instance):
+        super().perform_destroy()

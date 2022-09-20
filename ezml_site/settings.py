@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'stats.apps.StatsConfig',
     'teams.apps.TeamsConfig',
     'players.apps.PlayersConfig',
+    'api.apps.ApiConfig',
 
     'allauth',
     'allauth.account',
@@ -48,7 +49,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
 
     'ckeditor',
-    'django_countries'
+    'django_countries',
+    'rest_framework',
+    'rest_framework.authtoken',
+    "corsheaders",
 ]
 
 AUTH_USER_MODEL = 'base.User'
@@ -56,6 +60,7 @@ AUTH_USER_MODEL = 'base.User'
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -63,6 +68,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
     'base.middleware.ActiveUserMiddleware',
+    
 ]
 
 ROOT_URLCONF = "ezml_site.urls"
@@ -230,3 +236,8 @@ CKEDITOR_CONFIGS = {
         'width': 'auto',
     }
 }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://172.20.10.3:3000",
+]

@@ -1,0 +1,1 @@
+python manage.py loaddata position_stp_01.json player_data_fget_stp_02.json player_data_fteam_02_1.json team_data_fget_04.json team_data_fplayer_stp_06.json

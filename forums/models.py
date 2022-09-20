@@ -57,6 +57,11 @@ class Thread(models.Model):
         score = self.get_total_likes() - self.get_total_dis_likes()
         return score
 
+    @property
+    def total_comments(self):
+        num_comments = self.comment_set.count()
+        return num_comments
+
     def __str__(self):
         return str(self.name)
 

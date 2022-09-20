@@ -1,4 +1,4 @@
-import React from 'react'
+import {FC} from 'react'
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -13,10 +13,12 @@ import Typography from '@mui/material/Typography';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Button } from '@mui/material';
+import {ThreadCard} from "./ThreadModel";
+import { styled } from '@mui/material/styles';
 
-const MainCard = () => {
+const MainCard: FC<ThreadCard> = (props) => {
   return (
-    <Card sx={{ maxWidth: "100%", marginBottom: "16px" }} variant="filled">
+    <Card sx={{ maxWidth: "100%", marginBottom: "16px"}} variant="filled">
         <CardHeader
         avatar={
             <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
@@ -28,24 +30,21 @@ const MainCard = () => {
             <MoreVertIcon />
             </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
+        titleTypographyProps={{variant: "title" }}
+        title={props.name.substring(0,60) + '...'}
         subheader="September 14, 2016"
         />
+
         <CardMedia
         component="img"
         height="194"
         image="/static/images/cards/paella.jpg"
-        alt="Paella dish"
+        alt=""
         />
+        
         <CardContent>
         <Typography variant="body2" color="text.secondary">
-            This impressive paella is a perfect party dish and a fun meal to cook
-            together with your guests. Add 1 cup of frozen peas along with the mussels,
-            if you like.asdffffffffffThis impressive paella is a perfect party dish and a fun meal to cook
-            together with your guests. Add 1 cup of frozen peas along with the mussels,
-            if you like.asdffffffffffThis impressive paella is a perfect party dish and a fun meal to cook
-            together with your guests. Add 1 cup of frozen peas along with the mussels,
-            if you like.asdffffffffff
+            {props.text_fill}
         </Typography>
         </CardContent>
         <CardActions disableSpacing>

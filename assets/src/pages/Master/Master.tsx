@@ -9,11 +9,15 @@ import { FC, useState } from 'react';
 import Switch from '@mui/material/Switch';
 import MatchList from '../../components/MatchList';
 import { Typography, Divider } from '@mui/material';
+import { CircleFlag } from 'react-circle-flags';
+import IconButton from '@mui/material/IconButton';
+import BadgeAvatar from '../../components/BadgeAvatar';
+import RecentActivities from '../../components/RecentActivities';
 
 const label = { inputProps: { 'aria-label': 'Switch demo' } };
 
 const Master = () => {
-    const [search, setSearch] = useState<string | number>("")
+    const [search, setSearch] = useState<string | number>("");
     console.log(search)
 
   return (
@@ -29,11 +33,7 @@ const Master = () => {
           
           <Box height="87vh" display="flex" flexDirection="column">
             <Box flex={1} overflow="auto">
-                <MainCard/>
-                <MainCard/>
-                <MainCard/>
-                <MainCard/>
-                <MainCard/>
+
             </Box>
           </Box>
         </Grid>
@@ -70,6 +70,39 @@ const Master = () => {
         </Grid>
 
         <Grid item xs={2}>
+          <Box height="13vh">
+            <IconButton sx={{margin: "14px"}}>
+              <CircleFlag countryCode="id" height="32px"/>
+            </IconButton>
+            <IconButton>
+              <BadgeAvatar />
+            </IconButton>
+          </Box>
+          <Box height="87vh" display="flex" flexDirection="column">
+            <Typography variant='button' sx={{marginTop: "8px"}}>
+              Ongoing Events
+            </Typography>
+            <Divider variant='fullWidth' sx={{marginBottom: "8px"}}/>
+            <RecentActivities/>
+            <RecentActivities/>
+            <RecentActivities/>
+            <Typography variant='button' sx={{marginTop: "8px"}}>
+              Upcoming Events
+            </Typography>
+            <Divider variant='fullWidth' sx={{marginBottom: "8px"}}/>
+            <RecentActivities/>
+            <RecentActivities/>
+            <RecentActivities/>
+            <Typography variant='button' sx={{marginTop: "8px"}}>
+              Recent Activities
+            </Typography>
+            <Divider variant='fullWidth' sx={{marginBottom: "8px"}}/>
+            <RecentActivities/>
+            <RecentActivities/>
+            <RecentActivities/>
+            <RecentActivities/>
+            <RecentActivities/>
+          </Box>
         </Grid>
       </Grid>
     // </Box>
