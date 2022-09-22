@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     "corsheaders",
+    "tree_queries",
 ]
 
 AUTH_USER_MODEL = 'base.User'

@@ -43,7 +43,7 @@ const Home = () => {
             <Box height="87vh" display="flex" flexDirection="column">
                 <Box flex={1} overflow="auto">
                     {threads.map((thread, index) => (
-                        <MainCard name={thread.name} text_fill={thread.text_fill}/>
+                        <MainCard key={index} name={thread.name} text_fill={thread.text_fill}/>
                     ))}
  
                 </Box>

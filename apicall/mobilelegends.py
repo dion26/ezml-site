@@ -167,8 +167,15 @@ class mobilelegends():
 
     def get_player_info(self,playerName,results=False):
         player_object = ml_player()
-        playerName = player_object.process_playerName(playerName)		
-        soup,redirect_value = self.liquipedia.parse(playerName)
+        playerName = player_object.process_playerName(playerName)
+        try:	
+            soup,redirect_value = self.liquipedia.parse(playerName)
+            time.sleep(31)
+        except ex.RequestsException:
+            time.sleep(31)
+            player = {}
+            return player
+        
         if redirect_value is not None:
             playerName = redirect_value
         player = {}
@@ -179,11 +186,12 @@ class mobilelegends():
 
         if results:
             parse_value = playerName + "/Results"
-            time.sleep(31)
             try:
                 soup,__ = self.liquipedia.parse(parse_value)
+                time.sleep(31)
             except ex.RequestsException:
                 player['results'] = []
+                time.sleep(31)
             else:	
                 player['results'] = player_object.get_player_achivements(soup)
 

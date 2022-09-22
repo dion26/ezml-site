@@ -7,6 +7,7 @@ const SearchBoxStyle = styled(TextField)(() => ({
     '& fieldset': {
       borderRadius: "30px",
     },
+    width: "70%",
   }));
 
 interface Props{
@@ -32,7 +33,6 @@ const SearchBox = ({search, setSearch}:Props) => {
           ),
         }}
         variant="outlined"
-        fullWidth={true}
         margin="normal"
       />
   )

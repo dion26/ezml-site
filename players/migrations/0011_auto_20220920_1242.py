@@ -8,42 +8,48 @@ import os
 from pathlib import Path
 
 current_path = Path().absolute()
-path_name = "player_info_data_1.json"
-fixture_file = os.path.join(current_path, 'players', 'fixtures', path_name)
-file_exp = json.load(open(fixture_file, 'r'))
-
-list_id = [ele['pk'] for ele in file_exp]
+file_list = []
+fixture_folder = os.path.join(current_path, 'players', 'fixtures')
+for filename in os.listdir(fixture_folder):
+    obj_file = filename.split("_")
+    if obj_file[0] == "player" and obj_file[1] == "info":
+        f = os.path.join(fixture_folder, filename)
+        # checking if it is a file
+        if os.path.isfile(f):
+            file_list.append(f)
 
 def combine_data_player(apps, schema_editor):
     Player = apps.get_model('players', 'Player')
-    for data_ele in file_exp:
-        insp_pk = data_ele['pk']
-        try:
-            # Update data: if matched nicknam are equal
-            player_obj_match = Player.objects.get(pk=insp_pk)
-            fields_dict = data_ele['fields']
-            for key_f in fields_dict.keys():
-                if key_f == 'nickname':
-                    if fields_dict[key_f] != player_obj_match.nickname:
-                        raise Exception('Data with collision of pk')
-                    else:
-                        continue
-                else:
-                    obj_field_value = getattr(player_obj_match, key_f)
-                    if fields_dict[key_f]:
-                        if fields_dict[key_f] == obj_field_value:
-                            continue
+    for file_exp in file_list:
+        file_exp = json.load(open(file_exp, 'r'))
+        for data_ele in file_exp:
+            insp_pk = data_ele['pk']
+            try:
+                # Update data: if matched nicknam are equal
+                player_obj_match = Player.objects.get(pk=insp_pk)
+                fields_dict = data_ele['fields']
+                for key_f in fields_dict.keys():
+                    if key_f == 'nickname':
+                        if fields_dict[key_f] != player_obj_match.nickname:
+                            raise Exception('Data with collision of pk')
                         else:
-                            # Replacing the database
-                            # Position field is a list
-                            # Many2m rel resolve with set
-                            if isinstance(fields_dict[key_f], list):
-                                player_obj_match.position.set(fields_dict[key_f])
+                            continue
+                    else:
+                        obj_field_value = getattr(player_obj_match, key_f)
+                        if fields_dict[key_f]:
+                            if fields_dict[key_f] == obj_field_value:
+                                continue
                             else:
-                                setattr(player_obj_match, key_f, fields_dict[key_f])
-            player_obj_match.save()
-        except ObjectDoesNotExist:
-            print("this is impossible: JSON data based on Database")
+                                # Replacing the database
+                                # Position field is a list
+                                # Many2m rel resolve with set
+                                if isinstance(fields_dict[key_f], list):
+                                    player_obj_match.position.set(fields_dict[key_f])
+                                else:
+                                    setattr(player_obj_match, key_f, fields_dict[key_f])
+                player_obj_match.save()
+            except ObjectDoesNotExist:
+                print("this is impossible: JSON data based on Database")
 
 class Migration(migrations.Migration):
 

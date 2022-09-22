@@ -25,10 +25,19 @@ class Team(models.Model):
                 self.slug = slugify(''.join(self.name, str(r_num)))
                 return super(Team, self).save(*args, **kwargs)
 
+
 class Membership(models.Model):
-    
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    STATUS = (
+        ('A', 'Analyst'),
+        ('R', 'Retired'),
+        ('I', 'Inactive'),
+        ('L', 'Loan'),
+        ('C', 'Coach'),
+        ('P', 'Player')
+    )
+    player = models.ForeignKey(Player, on_delete=models.CASCADE, related_name="members_of")
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="has_members")
     date_joined = models.DateField(blank=True, default=datetime.date.today)
     date_left = models.DateField(null=True, blank=True)
+    status = models.CharField(max_length=1, choices=STATUS, default='P')
     

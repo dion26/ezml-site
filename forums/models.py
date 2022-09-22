@@ -4,6 +4,7 @@ from django.contrib import admin
 from base.models import User
 
 from ckeditor.fields import RichTextField
+from tree_queries.models import TreeNode
 import datetime
 import pytz
 import math
@@ -111,16 +112,18 @@ class FavoriteThread(models.Model):
     def __str__(self):
         return str(self.thread.name)[:30]
 
-class Comment(models.Model):
+class Comment(TreeNode):
     # likes
+    # Don"t forget to set parent (TreeNode)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     thread = models.ForeignKey(Thread, on_delete=models.CASCADE)
     body = models.TextField()
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
+    position = models.PositiveIntegerField(default=0)
 
     class Meta:
-        ordering = ['-updated', '-created']
+        ordering = ['position', '-updated', '-created']
 
     def get_total_likes(self):
         return self.likes.users.count()
