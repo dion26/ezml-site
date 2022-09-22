@@ -4,6 +4,7 @@ from .models import Thread, Comment, Subforum, LikeThread, DisLikeThread
 
 class ThreadAdmin(admin.ModelAdmin):
     list_display= ('name', 'get_total_likes', 'get_total_dis_likes',)
+    prepopulated_fields = {"slug": ('name',), }
 
 admin.site.register(Thread, ThreadAdmin)
 admin.site.register(Subforum)

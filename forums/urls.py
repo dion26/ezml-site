@@ -19,7 +19,7 @@ urlpatterns = [
 
     # REST API
     path('', views.ThreadListCreateAPIView.as_view()),
-    path('dt/<str:pk>/', views.ThreadDetailAPIView.as_view()),
-    path('update/<str:pk>/', views.ThreadUpdateAPIView.as_view()),
-    path('delete/<str:pk>/', views.ThreadDeleteAPIView.as_view()),
+    path('thread/<slug:slug>/', views.ThreadDetailAPIView.as_view(), name='thread'),
+    path('update/<slug:slug>/', views.ThreadUpdateAPIView.as_view()),
+    path('delete/<slug:slug>/', views.ThreadDeleteAPIView.as_view()),
 ]

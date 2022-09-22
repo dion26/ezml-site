@@ -242,3 +242,13 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://172.20.10.3:3000",
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        'rest_framework.authentication.SessionAuthentication',
+        'api.authentication.TokenAuthentication'
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    ]
+}

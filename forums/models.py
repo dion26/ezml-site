@@ -1,16 +1,19 @@
-from django.db import models
+from django.db import models, IntegrityError
 from django.contrib import admin
 
-from base.models import User
-
+from django.conf import settings
 from ckeditor.fields import RichTextField
 from tree_queries.models import TreeNode
+from django.utils.text import slugify
+import random
 import datetime
 import pytz
 import math
 
+User = settings.AUTH_USER_MODEL
+
 class Subforum(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200, verbose_name='Topic')
 
     def url_argument(self):
         return '-'.join(self.name.lower().split())
@@ -22,10 +25,10 @@ class Thread(models.Model):
     host = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     subforum = models.ForeignKey(Subforum, on_delete=models.SET_NULL, null=True)
     sticked = models.BooleanField(default=False)
-    # image
+    slug = models.SlugField(null=True, unique=True)
 
-    name = models.CharField(max_length=200)
-    description = models.CharField(null=True, blank=True, max_length=200)
+    name = models.CharField(max_length=100, verbose_name="Title")
+
     text_fill = RichTextField(null=True, blank=True,)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -33,6 +36,7 @@ class Thread(models.Model):
     class Meta:
         ordering = ['-updated', '-created']
 
+    @property
     def get_total_likes(self):
         try:
             likes = self.likes.users.count()
@@ -40,6 +44,7 @@ class Thread(models.Model):
             likes = 0
         return likes
     
+    @property
     def get_total_dis_likes(self):
         try:
             dlikes = self.dis_likes.users.count()
@@ -62,6 +67,16 @@ class Thread(models.Model):
     def total_comments(self):
         num_comments = self.comment_set.count()
         return num_comments
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        while True:
+            try:
+                return super(Thread, self).save(*args, **kwargs)
+            except IntegrityError:
+                r_num = random.randint(0, 100)
+                self.slug = slugify(''.join(self.name, str(r_num)))
+                return super(Thread, self).save(*args, **kwargs)
 
     def __str__(self):
         return str(self.name)
