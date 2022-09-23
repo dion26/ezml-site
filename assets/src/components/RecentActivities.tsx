@@ -4,9 +4,11 @@ import { CircleFlag } from 'react-circle-flags';
 
 const RecentActivities = () => {
   return (
-    <Card variant='outlined' sx={{borderRadius: "0px"}}>
+    <Box flex={1} overflow="auto" sx={{gap: "16px"}}>
+      <Card variant='outlined' sx={{borderRadius: "0px"}}>
         Test
     </Card>
+    </Box>
   )
 }
 

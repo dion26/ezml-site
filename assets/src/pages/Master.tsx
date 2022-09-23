@@ -15,6 +15,7 @@ import BadgeAvatar from '../components/BadgeAvatar';
 
 interface MasterProps {
   pageFill?: React.ReactNode;
+  sideFill?: React.ReactNode;
 }
 
 const Master: FC<MasterProps> = (props) => {
@@ -40,13 +41,15 @@ const Master: FC<MasterProps> = (props) => {
         </Grid>
         <Grid item xs={2}>
           <Box height="13vh">
-            
             <IconButton sx={{margin: "14px"}}>
               <CircleFlag countryCode="id" height="32px"/>
             </IconButton>
             <IconButton>
               <BadgeAvatar />
             </IconButton>
+          </Box>
+          <Box height="87vh">
+            {props.sideFill}
           </Box>
         </Grid>
     </Grid>

@@ -3,12 +3,15 @@ import { FC } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Home from './pages//Home';
 import {Container} from '@mui/material';
-import { useTheme } from "@mui/material/styles";
+import useTheme from "@mui/material/styles/useTheme";
 import Master from './pages/Master'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import ThreadDetail from './pages/ThreadDetail'
 import Forum from './pages/Forum';
+import MatchListPage from './pages/MatchListPage';
+import MatchDetail from './pages/MatchDetail';
+import RecentActivities from './components/RecentActivities';
 
 
 const App: FC = () => {
@@ -21,8 +24,31 @@ const App: FC = () => {
         {/* <Header /> */}
         <Routes>
             {/* <Master /> */}
-            <Route path='/' element={<Home/>}></Route>
-            <Route path='/thread/:threadId/:slug' element={<Master pageFill={<ThreadDetail/>}/>}></Route>
+            <Route path='/' element={<Master 
+                                        pageFill={<Home/>}
+                                        sideFill={<RecentActivities />}
+                                        /> }></Route>
+            <Route path='/forums' element={<Master 
+                                              pageFill={<Forum/>}
+                                              sideFill={<RecentActivities />}
+                                              />}></Route>
+            <Route path='/thread/:slug' element={<Master 
+                                            pageFill={<ThreadDetail/>} 
+                                            sideFill={<RecentActivities />}
+                                            />}></Route>
+            <Route path='/matches' element={<Master 
+                                            pageFill={<MatchListPage/>} 
+                                            sideFill={<RecentActivities />}
+                                            />}></Route>
+            <Route path='/matches/:id/:slug' element={<Master 
+                                            pageFill={<MatchDetail/>} 
+                                            sideFill={<RecentActivities />}
+                                            />}></Route>
+            <Route path='*' element={<Master 
+                                        pageFill={<Home/>}
+                                        sideFill={<RecentActivities />}
+                                        /> }></Route>
+                              
         </Routes>
         <Footer/>
       </Container>

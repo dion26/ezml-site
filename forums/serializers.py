@@ -28,17 +28,16 @@ class ThreadSerializer(serializers.HyperlinkedModelSerializer):
             'host',
             'user_upvote',
             'user_downvote',
-            'updated',
-            'created',
             'sticked',
             'topics',
             'name',
             'text_fill',
-            'get_total_likes',
-            'get_total_dis_likes',
             'total_comments',
             'url',
             'likes',
+            'posted_since',
+            'get_top_score',
+            'get_hot_score',
         ]
         read_only_fields = ['text_fill', 'name', 'sticked']
 

@@ -1,12 +1,18 @@
+interface Host {
+    username: string;
+}
+
+
 export interface ThreadCard {
     name: string;
     id?: number;
-    dateCreated?: string;
-    dateUpdated?: string;
-    creator?: string;
-    subForum?: string;
+    topics?: string;
     sticked?: boolean;
-    description?: string;
     text_fill?: string;
-    numComments?: number;
+    total_comments?: number;
+    host?: Host;
+    posted_since: number;
+    get_top_score: number;
+    user_upvote: boolean;
+    user_downvote: boolean;
 }

@@ -11,6 +11,7 @@ import pytz
 import math
 
 User = settings.AUTH_USER_MODEL
+utc = pytz.utc
 
 class Subforum(models.Model):
     name = models.CharField(max_length=200, verbose_name='Topic')
@@ -52,16 +53,24 @@ class Thread(models.Model):
             dlikes = 0
         return dlikes
 
+    @property
     def get_hot_score(self):
-        score = math.log(abs(self.get_total_likes() - self.get_total_dis_likes() + 0.5))
-        utc = pytz.utc
+        score = math.log(abs(self.get_total_likes - self.get_total_dis_likes + 0.5))
+        
         now = datetime.datetime.utcnow().replace(tzinfo=utc)
         weight = (now - self.created).total_seconds()/45000
         return score/weight
 
+    @property
     def get_top_score(self):
-        score = self.get_total_likes() - self.get_total_dis_likes()
+        score = self.get_total_likes - self.get_total_dis_likes
         return score
+    
+    @property
+    def posted_since(self):
+        now = datetime.datetime.utcnow().replace(tzinfo=utc)
+        timediff = now - self.created
+        return timediff.total_seconds()
 
     @property
     def total_comments(self):

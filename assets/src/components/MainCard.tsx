@@ -16,8 +16,9 @@ import { Button } from '@mui/material';
 import {ThreadCard} from "./ThreadModel";
 import { styled } from '@mui/material/styles';
 
+
 const MainCard: FC<ThreadCard> = (props) => {
-  return (
+    return (
     <Card sx={{ maxWidth: "100%", marginBottom: "16px"}} variant="filled">
         <CardHeader
         avatar={

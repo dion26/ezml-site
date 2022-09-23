@@ -17,16 +17,32 @@ import Divider from '@mui/material/Divider';
 import ListSubheader from '@mui/material/ListSubheader';
 import { AppBar, Toolbar } from '@mui/material';
 
-import { useTheme } from "@mui/material/styles";
+import { useTheme, styled } from "@mui/material/styles";
 import logo from "../logo-large.svg"
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import DrawerComponent from './DrawerComponent';
+import {Typography} from '@mui/material';
+
+import { Link, NavLink } from 'react-router-dom';
 
 
+const ActiveListItemButton = styled(ListItemButton)({
+    '&.active .MuiTypography-root': {
+      fontWeight: 'bold',
+    },
+  });
 
 export default function PermanentDrawerLeft() {
+    
+    const theme = useTheme();
+    const ActiveListItem = styled(ListItem)({
+        "&.active": {
+            background:theme.palette.primaryContainer.main,
+            textDecoration: "none", 
+            color: "inherit",
+            borderRadius: "32px",
+          },
+        textDecoration: "none", 
+        color: "inherit"
+      });
     const competitiveCategory = [
         {
             id: 'Competitive',
@@ -78,7 +94,7 @@ export default function PermanentDrawerLeft() {
             ],
         },
     ];
-    const theme = useTheme();
+    
 
   return (
     <Box 
@@ -89,16 +105,21 @@ export default function PermanentDrawerLeft() {
         }}>
         <AppBar color="default" elevation={0} position="static" sx={{display: 'flex-inline', borderRadius:"16px"}}>
             <Toolbar variant='regular' sx={{ borderRadius:"16px", gap: 3, marginTop: "16px"}}>
-                <Box
+               <Link style={{textDecoration: "none", color: "inherit", 
+                            display:"flex", gap:"16px", 
+                            alignItems:"center"}} to={'/'}>
+               <Box
                     component="img"
                     sx={{
                     width: 48,
                     maxWidth: { xs: 24, md: 48 },
                     }}
-                    alt="The house from the offer."
+                    alt="EZML"
                     src={logo}
                 />
+                
                 <Typography variant='h5' fontWeight={"bold"}>EZML</Typography>
+                </Link>
             </Toolbar>
         </AppBar>
             
@@ -111,14 +132,16 @@ export default function PermanentDrawerLeft() {
                 
             </ListSubheader>}>
             {children.map(({id: childId, icon}) => (
-                <ListItem disablePadding key={childId}>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            {icon}
-                        </ListItemIcon>
-                        <ListItemText primary={childId} />
-                    </ListItemButton>
-                </ListItem>
+                // <Link style={{textDecoration: "none", color: "inherit"}} to={`/${childId}`}>
+                <ActiveListItem disablePadding key={childId} component={NavLink} exact to={`/${childId}`}>   
+                        <ListItemButton>
+                            <ListItemIcon>
+                                {icon}
+                            </ListItemIcon>
+                            <ListItemText primary={childId} />
+                        </ListItemButton>
+                </ActiveListItem>
+                // </Link>
             ))}
         </List>
         ))}
@@ -131,14 +154,15 @@ export default function PermanentDrawerLeft() {
                 </Typography>
             </ListSubheader>}>
             {children.map(({id: childId, icon}) => (
-                <ListItem disablePadding key={childId}>
-                    <ListItemButton>
-                        <ListItemIcon>
-                            {icon}
-                        </ListItemIcon>
-                        <ListItemText primary={childId} />
-                    </ListItemButton>
-                </ListItem>
+                    <ActiveListItem disablePadding key={childId} component={NavLink} exact to={`/${childId}`}>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                {icon}
+                            </ListItemIcon>
+                            <ListItemText primary={childId} />
+                        </ListItemButton>
+                    </ActiveListItem>
+
             ))}
         </List>
         ))}
@@ -151,14 +175,14 @@ export default function PermanentDrawerLeft() {
                 </Typography>
             </ListSubheader>}>
             {children.map(({id: childId, icon}) => (
-                <ListItem disablePadding key={childId}>
+                <ActiveListItem disablePadding key={childId} component={NavLink} exact to={`/${childId}`}>
                     <ListItemButton>
                         <ListItemIcon>
                             {icon}
                         </ListItemIcon>
                         <ListItemText primary={childId} />
                     </ListItemButton>
-                </ListItem>
+                </ActiveListItem>
             ))}
         </List>
         ))}

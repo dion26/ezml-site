@@ -4,16 +4,12 @@ import axios from 'axios';
 
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Switch from '@mui/material/Switch';
-import IconButton from '@mui/material/IconButton';
+import Divider from '@mui/material/Divider';
+import {Typography} from '@mui/material'
 
-import MenuDrawer from '../components/MenuDrawer';
-import SearchBox from '../components/SearchBox';
 import MainCard from '../components/MainCard';
 import {ThreadCard} from "../components/ThreadModel";
-
-import { CircleFlag } from 'react-circle-flags';
-import BadgeAvatar from '../components/BadgeAvatar';
+import MatchList from '../components/MatchList';
 
 const Home = () => {
     const [search, setSearch] = useState<string | number>("");
@@ -32,42 +28,41 @@ const Home = () => {
         setThreads(data)
     }
   return (
-    <Grid container spacing={3} justifyContent="sapce-between" alignItems="flex-start"> 
-        <Grid item xs={3} >
-            <MenuDrawer/>
-        </Grid>
+      <Grid container columns={7}>
         <Grid item xs={4}>
-            <Box height="13vh">
-                <SearchBox search={search} setSearch={setSearch}/>
-            </Box>
             <Box height="87vh" display="flex" flexDirection="column">
                 <Box flex={1} overflow="auto">
                     {threads.map((thread, index) => (
-                        <MainCard key={index} name={thread.name} text_fill={thread.text_fill}/>
+                        <MainCard key={index} 
+                                    name={thread.name} 
+                                    text_fill={thread.text_fill}
+                                    posted_since={thread.posted_since}
+                                    get_top_score={thread.get_top_score}
+                                    user_upvote={thread.user_upvote}
+                                    user_downvote={thread.user_downvote}
+                                    />
                     ))}
  
                 </Box>
             </Box>
         </Grid>
         <Grid item xs={3}>
-          <Box height="13vh">
-            <Switch sx={{
-              marginTop: "24px",
-              float: "right"
-            }}/>
+          <Box margin={1}>
+            <Typography>
+              Upcoming Matches
+            </Typography>
+            <Divider/>
+            <MatchList/>
+          </Box>
+          <Box margin={1}>
+            <Typography>
+              Upcoming Matches
+            </Typography>
+            <Divider/>
+            <MatchList/>
           </Box>
         </Grid>
-        <Grid item xs={2}>
-          <Box height="13vh">
-            <IconButton sx={{margin: "14px"}}>
-              <CircleFlag countryCode="id" height="32px"/>
-            </IconButton>
-            <IconButton>
-              <BadgeAvatar />
-            </IconButton>
-          </Box>
-        </Grid>
-    </Grid>
+      </Grid>
   )
 }
 
