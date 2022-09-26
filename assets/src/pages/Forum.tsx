@@ -29,7 +29,8 @@ const Forum: React.FC = () => {
     const apiUrl = '/api/forums/';
 
     let getThreads = async () => {
-        let response = await axios.get(apiUrl);
+        let response = await axios.get(apiUrl)
+        console.log(response)
         let data = response.data
         setThreads(data)
     }
@@ -55,6 +56,7 @@ const Forum: React.FC = () => {
                   user_upvote={thread.user_upvote}
                   user_downvote = {thread.user_downvote}
                   topics = {thread.topics}
+                  slug = {thread.slug}
                 />
         ))}
       </Box>

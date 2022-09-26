@@ -42,11 +42,12 @@ INSTALLED_APPS = [
 
     'allauth',
     'allauth.account',
+
     'allauth.socialaccount',
-    
     'allauth.socialaccount.providers.discord',
     'allauth.socialaccount.providers.facebook',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.twitter',
 
     'ckeditor',
     'django_countries',
@@ -54,6 +55,9 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     "corsheaders",
     "tree_queries",
+    'dj_rest_auth',
+    'rest_framework_simplejwt',
+    'dj_rest_auth.registration',
 ]
 
 AUTH_USER_MODEL = 'base.User'
@@ -246,9 +250,16 @@ CORS_ALLOWED_ORIGINS = [
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
         'rest_framework.authentication.SessionAuthentication',
-        'api.authentication.TokenAuthentication'
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'api.authentication.TokenAuthentication',
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly'
     ]
+}
+
+REST_USE_JWT = True
+JWT_AUTH_COOKIE = 'jwt-auth'
+REST_AUTH_SERIALIZERS = {
+    'LOGIN_SERIALIZER': 'base.serializers.CustomLoginSerializer',
 }

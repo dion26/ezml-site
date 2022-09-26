@@ -108,17 +108,17 @@ export default function PermanentDrawerLeft() {
                <Link style={{textDecoration: "none", color: "inherit", 
                             display:"flex", gap:"16px", 
                             alignItems:"center"}} to={'/'}>
-               <Box
-                    component="img"
-                    sx={{
-                    width: 48,
-                    maxWidth: { xs: 24, md: 48 },
-                    }}
-                    alt="EZML"
-                    src={logo}
-                />
-                
-                <Typography variant='h5' fontWeight={"bold"}>EZML</Typography>
+                <Box
+                        component="img"
+                        sx={{
+                        width: 48,
+                        maxWidth: { xs: 24, md: 48 },
+                        }}
+                        alt="EZML"
+                        src={logo}
+                    />
+                    
+                    <Typography variant='h5' fontWeight={"bold"}>EZML</Typography>
                 </Link>
             </Toolbar>
         </AppBar>

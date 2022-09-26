@@ -28,11 +28,11 @@ class ThreadListCreateAPIView(
         serializer.save(host=self.request.user)
         # serializer.save()
 
-class ThreadDetailAPIView(generics.RetrieveAPIView):
+class ThreadDetailAPIView(permissions.AllowAny,
+                        generics.RetrieveAPIView):
     queryset = Thread.objects.all()
     serializer_class = ThreadSerializer
     lookup_field = 'slug'
-
 
 class ThreadListAPIView(generics.RetrieveAPIView):
     '''

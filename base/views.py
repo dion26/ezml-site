@@ -10,6 +10,7 @@ from .forms import UserForm, EzmlUserCreationForm
 from .models import User
 
 from forums.models import Thread, Subforum, Comment
+from dj_rest_auth.views import LoginView
 
 def loginPage(request):
 
@@ -83,3 +84,7 @@ def updateUser(request):
             return redirect('user-profile', pk=user.id)
 
     return render(request, 'base/update_user.html', {'form': form})
+
+
+class CustomApiLoginView(LoginView):
+    pass

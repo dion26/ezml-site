@@ -3,6 +3,7 @@ from operator import truediv
 from django.db import models, IntegrityError
 from django_countries.fields import CountryField
 from django.utils.text import slugify
+from datetime import date
 import random
 
 # Create your models here.
@@ -47,6 +48,23 @@ class Player(models.Model):
                 r_num = random.randint(0, 100)
                 self.slug = slugify(''.join(self.nickname, str(r_num)))
                 return super(Player, self).save(*args, **kwargs)
+
+    @property
+    def get_age(self):
+        today = date.today()
+        try:
+            birthday = self.dob.replace(year = today.year)
+
+        # raised when birth date is February 29
+        # and the current year is not a leap year
+        except ValueError:
+            birthday = self.dob.replace(year = today.year,
+                    month = self.dob.month + 1, day = 1)
+    
+        if birthday > today:
+            return today.year - self.dob.year - 1
+        else:
+            return today.year - self.dob.year
 
 
 class SocialMedia(models.Model):

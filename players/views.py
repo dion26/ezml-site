@@ -4,6 +4,8 @@ from django.views.generic.detail import DetailView
 
 from rest_framework import generics
 from .serializers import PlayerSerializer
+from .models import Player
+from django.shortcuts import get_object_or_404
 
 class PlayerDetailView(DetailView):
     model = Player
@@ -13,7 +15,11 @@ class PlayerDetailView(DetailView):
     query_pk_and_slug = True
 
 class PlayerDetailAPIView(generics.RetrieveAPIView):
-    queryset = Player.objects.all()
     serializer_class = PlayerSerializer
+
+    def get_queryset(self):
+        player_id = self.kwargs['pk']
+        player_slug = self.kwargs['slug']
+        return Player.objects.filter(id=player_id, slug=player_slug)
     
     

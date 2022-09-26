@@ -1,34 +1,27 @@
 
 import { FC } from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
-import Home from './pages//Home';
-import {Container} from '@mui/material';
-import useTheme from "@mui/material/styles/useTheme";
-import Master from './pages/Master'
-import Header from './components/Header'
-import Footer from './components/Footer'
-import ThreadDetail from './pages/ThreadDetail'
-import Forum from './pages/Forum';
-import MatchListPage from './pages/MatchListPage';
-import MatchDetail from './pages/MatchDetail';
-import RecentActivities from './components/RecentActivities';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import Master from './pages/Master';
+import Home from './pages//Home';
+// Auth
+import SignIn from './pages/SignIn'
+import SignUp from './pages/SignUp';
+// Hidden Access
+import PlayerDetail from './pages/PlayerDetail';
+
+import Footer from './components/Footer'
 
 const App: FC = () => {
-  const theme = useTheme();
   return (
     <BrowserRouter>
-      <Container maxWidth="lg" style={{backgroundColor: theme.palette.onPrimary.main, 
-            borderRadius: "16px 16px 0 0 ", display: "flex", flexDirection: "column", 
-            maxHeight: "100vh", paddingLeft: 0, paddingRight: 0}}>
-        {/* <Header /> */}
+      <Master>
         <Routes>
-            {/* <Master /> */}
-            <Route path='/' element={<Master 
-                                        pageFill={<Home/>}
-                                        sideFill={<RecentActivities />}
-                                        /> }></Route>
-            <Route path='/forums' element={<Master 
+            <Route path='/' element={<Home/>}></Route>
+            <Route path='/signin' element={<SignIn/>}></Route>
+            <Route path='/signup' element={<SignUp/>}></Route>
+            <Route path='/player/:id/:slug' element={<PlayerDetail/>}></Route>
+            {/* <Route path='/forums' element={<Master 
                                               pageFill={<Forum/>}
                                               sideFill={<RecentActivities />}
                                               />}></Route>
@@ -47,11 +40,10 @@ const App: FC = () => {
             <Route path='*' element={<Master 
                                         pageFill={<Home/>}
                                         sideFill={<RecentActivities />}
-                                        /> }></Route>
+                                        /> }></Route> */}
                               
         </Routes>
-        <Footer/>
-      </Container>
+      </Master>
     </BrowserRouter> 
   )
 }

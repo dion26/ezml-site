@@ -20,6 +20,8 @@ import ShareIcon from '@mui/icons-material/Share';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import {ThreadCard} from "./ThreadModel";
 
+import { Link as RouterLink, NavLink } from 'react-router-dom';
+
 
 function countdown(s:number) {
   const d = Math.floor(s / (3600 * 24));
@@ -48,10 +50,10 @@ const ThreadCardForum: FC<ThreadCard> = (props) => {
   
     let upvote_var = ((props.user_upvote == true) ? 'primary' : 'default');
     let downvote_var = ((props.user_downvote == true) ? 'primary' : 'default');
-  
+    let for_url = "thread/" + props.slug;
     return (
       <Card variant="filled" sx={{borderRadius: 0, marginTop: "8px", width:"100%"}}>
-        <CardActionArea>
+        <CardActionArea component={RouterLink} exact to={`/${for_url}`}>
             <CardContent>
             <Box display="inline-flex" gap={1}>
                 <Typography sx={{ fontSize: 12 }} color="text.secondary" gutterBottom>

@@ -2,6 +2,8 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import { CssBaseline } from '@mui/material';
+import store from './store'
+import { Provider } from 'react-redux'
 
 import ThemeModeProvider from './theme/context/ThemeModeContext';
 import ThemeSchemeProvider from './theme/context/ThemeSchemeContext';
@@ -14,7 +16,9 @@ root.render(
         <ThemeSchemeProvider>
             <M3ThemeProvider>
                 <CssBaseline enableColorScheme />
-                <App />
+                {/* <Provider store={store}> */}
+                    <App />
+                {/* </Provider> */}
             </M3ThemeProvider>
         </ThemeSchemeProvider>
     </ThemeModeProvider>

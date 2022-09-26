@@ -38,6 +38,7 @@ class ThreadSerializer(serializers.HyperlinkedModelSerializer):
             'posted_since',
             'get_top_score',
             'get_hot_score',
+            'slug',
         ]
         read_only_fields = ['text_fill', 'name', 'sticked']
 
