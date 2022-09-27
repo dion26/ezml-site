@@ -9,6 +9,9 @@ import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp';
 // Hidden Access
 import PlayerDetail from './pages/PlayerDetail';
+import SearchResult from './pages/SearchResult';
+import Page from './pages/404'
+import Forum from './pages/Forum';
 
 import Footer from './components/Footer'
 
@@ -21,11 +24,9 @@ const App: FC = () => {
             <Route path='/signin' element={<SignIn/>}></Route>
             <Route path='/signup' element={<SignUp/>}></Route>
             <Route path='/player/:id/:slug' element={<PlayerDetail/>}></Route>
-            {/* <Route path='/forums' element={<Master 
-                                              pageFill={<Forum/>}
-                                              sideFill={<RecentActivities />}
-                                              />}></Route>
-            <Route path='/thread/:slug' element={<Master 
+            <Route path='/search/:qname' element={<SearchResult/>}></Route>
+            <Route path='/forums' element={<Forum />}></Route>
+            {/* <Route path='/thread/:slug' element={<Master 
                                             pageFill={<ThreadDetail/>} 
                                             sideFill={<RecentActivities />}
                                             />}></Route>
@@ -36,11 +37,8 @@ const App: FC = () => {
             <Route path='/matches/:id/:slug' element={<Master 
                                             pageFill={<MatchDetail/>} 
                                             sideFill={<RecentActivities />}
-                                            />}></Route>
-            <Route path='*' element={<Master 
-                                        pageFill={<Home/>}
-                                        sideFill={<RecentActivities />}
-                                        /> }></Route> */}
+                                            />}></Route> */}
+            <Route path='*' element={<Page/> }></Route>
                               
         </Routes>
       </Master>

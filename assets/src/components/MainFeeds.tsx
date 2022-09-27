@@ -8,7 +8,7 @@ import Divider from '@mui/material/Divider';
 import {Typography} from '@mui/material'
 
 import MainCard from '../components/MainCard';
-import {ThreadCard} from "../components/ThreadModel";
+import {ThreadCard} from "./models/ThreadModel";
 import MatchList from '../components/MatchList';
 
 const MainFeeds = () => {

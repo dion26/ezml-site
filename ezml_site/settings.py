@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'teams.apps.TeamsConfig',
     'players.apps.PlayersConfig',
     'api.apps.ApiConfig',
+    'search.apps.SearchConfig',
 
     'allauth',
     'allauth.account',

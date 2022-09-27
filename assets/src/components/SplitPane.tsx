@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 import SearchBox from '../components/SearchBox';
 import BadgeAvatar from '../components/BadgeAvatar';
 import Box from '@mui/material/Box';
@@ -8,6 +8,8 @@ import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import { CircleFlag } from 'react-circle-flags';
 import { Link } from 'react-router-dom';
+import axios from 'axios'
+
 interface PaneProps {
     pageFill: JSX.Element,
     sideFill: JSX.Element,
@@ -23,16 +25,35 @@ function Avatar(isLogIn:boolean) {
 }}
 
 const SplitPane: FC<PaneProps> = (props) => {
-    const [search, setSearch] = useState<string | number>("");
+    const [search, setSearch] = useState<string | undefined>("");
+    const [options, setOptions] = useState([]);
     const {pageFill, sideFill} = props
+    let url = `/api/search/?q=${search}`;
+
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        axios({method: 'GET', url: url, headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },})
+        .then(response => {
+            setOptions(response.data);
+        })
+        .catch(error => {
+            console.log('error geting search API call');
+        });
+      }, 700);
+      return () => clearTimeout(timer);
+    }, [search]);
 
     const isLogIn = false
     let avatar = Avatar(isLogIn)
+
   return (
     <>
       <Grid item xs={7}>
-        <Box height="13vh">
-            <SearchBox search={search} setSearch={setSearch}/>
+        <Box height="13vh" display="flex">
+            <SearchBox search={search} setSearch={setSearch} options={options}/>
             <Switch sx={{
                     marginTop: "24px",
                     float: "right"

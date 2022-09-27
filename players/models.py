@@ -1,12 +1,26 @@
+from cgitb import lookup
 from email.policy import default
 from operator import truediv
 from django.db import models, IntegrityError
 from django_countries.fields import CountryField
 from django.utils.text import slugify
+from django.db.models import Q
 from datetime import date
 import random
 
-# Create your models here.
+class PlayerQuerySet(models.QuerySet):
+    def search(self, query):
+        lookup = Q(nickname__icontains=query) | Q(fullname__icontains=query) | Q(alternate_ids__icontains=query)
+        qs = self.filter(lookup)
+        return qs
+
+class PlayerManager(models.Manager):
+
+    def get_queryset(self, *args, **kwargs):
+        return PlayerQuerySet(self.model, using=self._db)
+
+    def search(self, query, user=None):
+        return self.get_queryset().search(query)
 
 class Position(models.Model):
     name = models.CharField(unique=True, primary_key=True, max_length=30)
@@ -35,6 +49,9 @@ class Player(models.Model):
     alternate_ids = models.CharField(null=True, blank=True, max_length=300)
     earning = models.IntegerField(null=True, blank=True)
     status = models.CharField(max_length=1, choices=STATUS, default='A')
+
+    objects = models.Manager()
+    search_objects = PlayerManager()
 
     def __str__(self):
         return self.nickname

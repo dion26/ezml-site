@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Button } from '@mui/material';
-import {ThreadCard} from "./ThreadModel";
+import {ThreadCard} from "./models/ThreadModel";
 import { styled } from '@mui/material/styles';
 
 

@@ -7,7 +7,7 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import { useParams } from 'react-router-dom'
 import ThreadCardForum from '../components/ThreadCardForum';
-import { ThreadCard } from "../components/ThreadModel";
+import { ThreadCard } from "../components/models/ThreadModel";
 import { useAxios } from '../components/useAxios';
 
 type SlugParam = {
@@ -21,7 +21,7 @@ const ThreadDetail = () => {
   
   const [loading, data, error, request] = useAxios<ThreadCard>({method: 'GET', url: url});
   if (loading) return <p>Loading</p>;
-  if (error != '') return <p>{url}</p>;
+  if (error != '') return <p>Error: Invalid Input</p>;
   if (!data) return <p>Data was null</p>;
 
   return (

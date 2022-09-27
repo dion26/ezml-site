@@ -18,7 +18,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import ShareIcon from '@mui/icons-material/Share';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import {ThreadCard} from "./ThreadModel";
+import {ThreadCard} from "./models/ThreadModel";
 
 import { Link as RouterLink, NavLink } from 'react-router-dom';
 

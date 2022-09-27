@@ -8,18 +8,31 @@ import Typography from '@mui/material/Typography';
 
 import { CircleFlag } from 'react-circle-flags';
 import logo from "../Logo_MPL.png";
+import { useParams } from 'react-router-dom';
+import { PlayerModel } from './models/PlayerModel';
+import { useAxios } from './useAxios';
 
 const PlayerHeader = () => {
+  const {id, slug} = useParams()
+  
+  let url = `/api/players/${id?.toString()}/${slug}/`;
+  
+  const [loading, data, error, request] = useAxios<PlayerModel>({method: 'GET', url: url});
+  if (loading) return <p>Loading</p>;
+  if (error != '') return <p>Error: Invalid Input</p>;
+  if (!data) return <p>Data was null</p>;
+
   return (
     <Box >
       <Card variant='outlined' sx={{border: "none", padding:"0", 
                                     paddingRight: "16px",
                                     display: "flex", 
-                                    justifyContent: "space-between",
-                                    borderRadius: "16px 16px 0 0"}}>
+                                    justifyContent: "flex-start",
+                                    borderRadius: "16px 16px 0 0",
+                                    gap: "16px"}}>
         <CardMedia 
         component="img"
-        image={logo}
+        image={data.image}
         alt="Name"
         sx={{width: 198, 
             height: 198,
@@ -31,19 +44,19 @@ const PlayerHeader = () => {
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: "flex-start" }}>
             <Box sx={{display: 'flex', alignItems: "center"}}>
                 <IconButton sx={{margin: "16px"}}>
-                    <CircleFlag countryCode="id" height="32px"/>
+                    <CircleFlag countryCode={data.country.toLowerCase()} height="32px"/>
                 </IconButton>
-                <Typography variant='h6'>ALBERTTT</Typography>
+                <Typography variant='h6'>{data.nickname}</Typography>
             </Box>
             
             <CardContent sx={{margin:0, padding: 0}}>
 
-                <Typography>Albert Neilsen Iskandar</Typography>
+                <Typography>{data.fullname}</Typography>
                     
                 
-                <Typography>Age: 20</Typography>
-                <Typography>@rrq_alberttt</Typography>
-                <Typography>RRQ ALBERTTT</Typography>
+                <Typography>Age: {data.get_age}</Typography>
+                <Typography>{data.status}</Typography>
+                <Typography>{data.alternate_ids}</Typography>
             </CardContent>
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', 

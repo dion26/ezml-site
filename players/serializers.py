@@ -17,5 +17,6 @@ class PlayerSerializer(serializers.ModelSerializer):
             'get_age',
             'alternate_ids',
             'earning',
-            'status'
+            'status',
+            'id'
         ]
