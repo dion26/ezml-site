@@ -7,6 +7,7 @@ from django_countries.fields import CountryField
 import datetime
 
 class Team(models.Model):
+    public_id = models.PositiveIntegerField(unique=True)
     name = models.CharField(max_length=100, unique=True)
     logo = models.ImageField(null=True, default="ezml_logo_opac.svg")
     members = models.ManyToManyField(Player, through='Membership')
@@ -16,7 +17,7 @@ class Team(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.nickname)
+        self.slug = slugify(self.name)
         while True:
             try:
                 return super(Team, self).save(*args, **kwargs)

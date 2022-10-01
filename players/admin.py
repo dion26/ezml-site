@@ -13,5 +13,9 @@ class PlayerAdmin(admin.ModelAdmin):
     set.admin_order_field = 'set__name'
 admin.site.register(Player, PlayerAdmin)
 
-admin.site.register(SocialMedia)
+
+class SocialAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'owner')
+    
+admin.site.register(SocialMedia, SocialAdmin)
 admin.site.register(Position)

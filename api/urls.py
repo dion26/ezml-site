@@ -16,6 +16,7 @@ urlpatterns = [
     path('players/', include('players.urls')),
     path('search/', include('search.urls')),
     path('forums/', include('forums.urls')),
+    path('teams/', include('teams.urls')),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
 ]

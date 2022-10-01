@@ -8,6 +8,9 @@ from django.db.models import Q
 from datetime import date
 import random
 
+def upload_to(instance, filename):
+    return f'player/{filename}'
+
 class PlayerQuerySet(models.QuerySet):
     def search(self, query):
         lookup = Q(nickname__icontains=query) | Q(fullname__icontains=query) | Q(alternate_ids__icontains=query)
@@ -38,12 +41,13 @@ class Player(models.Model):
         ('I', 'Inactive'),
         ('L', 'Loan'),
     )
+    public_id = models.PositiveIntegerField(unique=True)
     nickname = models.CharField(max_length=60, unique=True)
     fullname = models.CharField(max_length=60, blank=True, null=True)
     country = CountryField(blank=True, null=True)
     role = models.CharField(max_length=1, choices=ROLE, default='P')
     slug = models.SlugField(null=True)
-    image = models.ImageField(default="avatar.svg")
+    image = models.ImageField(default="avatar.svg", upload_to=upload_to)
     position = models.ManyToManyField(Position, related_name="players", blank=True)
     dob = models.DateField(null=True, blank=True)
     alternate_ids = models.CharField(null=True, blank=True, max_length=300)
@@ -87,8 +91,12 @@ class Player(models.Model):
 class SocialMedia(models.Model):
     owner = models.OneToOneField(Player, on_delete=models.CASCADE, related_name="social")
     youtube = models.URLField(blank=True, null=True)
+    instagram = models.URLField(blank=True, null=True)
     tiktok = models.URLField(blank=True, null=True)
     vk = models.URLField(blank=True, null=True)
     facebook = models.URLField(blank=True, null=True)
+
+    def __str__(self):
+        return self.owner.nickname + ' social media'
 
 
