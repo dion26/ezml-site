@@ -15,6 +15,7 @@ class PlayerSerializer(serializers.ModelSerializer):
             'country',
             'slug',
             'image',
+            'image_url',
             'position',
             'get_age',
             'alternate_ids',

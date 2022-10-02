@@ -23,7 +23,6 @@ class mobilelegends():
 
         # init for get teams
 
-
     def get_players(self):
         regions = ['Europe', 'CIS', 'North_America','South_America', 'South_Asia', 'Southeast_Asia', 'East_Asia', 'Middle_East_Africa']
         players = []

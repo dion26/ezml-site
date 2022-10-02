@@ -14,7 +14,7 @@ import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
 import {ThreadCard} from "../components/models/ThreadModel";
 import ThreadCardForum from '../components/ThreadCardForum';
-
+import MouseFollowing from '../components/MouseFollowing';
 const ForumPane: React.FC = () => {
   const handleClick = () => {
     console.info('You clicked the Chip.');
@@ -59,6 +59,8 @@ const ForumPane: React.FC = () => {
                   slug = {thread.slug}
                 />
         ))}
+
+      <MouseFollowing/>
       </Box>
     </Box>
   )

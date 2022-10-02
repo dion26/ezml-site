@@ -41,4 +41,9 @@ class Membership(models.Model):
     date_joined = models.DateField(blank=True, default=datetime.date.today)
     date_left = models.DateField(null=True, blank=True)
     status = models.CharField(max_length=1, choices=STATUS, default='P')
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['player', 'date_joined'], name='unique_transfer')
+        ]
     

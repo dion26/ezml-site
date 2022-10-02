@@ -6,10 +6,13 @@ from django_countries.fields import CountryField
 from django.utils.text import slugify
 from django.db.models import Q
 from datetime import date
+from django.core.files import File
+from urllib.request import urlopen
+from tempfile import NamedTemporaryFile
+from django.conf import settings
 import random
-
-def upload_to(instance, filename):
-    return f'player/{filename}'
+import os
+import re
 
 class PlayerQuerySet(models.QuerySet):
     def search(self, query):
@@ -47,7 +50,8 @@ class Player(models.Model):
     country = CountryField(blank=True, null=True)
     role = models.CharField(max_length=1, choices=ROLE, default='P')
     slug = models.SlugField(null=True)
-    image = models.ImageField(default="avatar.svg", upload_to=upload_to)
+    image = models.ImageField(default="avatar.svg")
+    image_url = models.URLField(blank=True, null=True)
     position = models.ManyToManyField(Position, related_name="players", blank=True)
     dob = models.DateField(null=True, blank=True)
     alternate_ids = models.CharField(null=True, blank=True, max_length=300)
@@ -62,6 +66,18 @@ class Player(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.nickname)
+        if self.image_url:
+            base_name = os.path.basename(self.image.url)
+            base_file_name = os.path.basename(self.image_url)
+            base_file_name = re.sub('[^a-zA-Z0-9_\.]', '', base_file_name)
+            abs_url = f'{settings.MEDIA_ROOT}/player/{base_file_name}'
+            if os.path.isfile(abs_url):
+                os.remove(abs_url)
+            if (base_name == 'avatar.svg' or base_name != base_file_name):
+                img_temp = NamedTemporaryFile(delete=True)
+                img_temp.write(urlopen(self.image_url).read())
+                img_temp.flush()
+                self.image.save(f"player/{base_file_name}", File(img_temp))
         while True:
             try:
                 return super(Player, self).save(*args, **kwargs)
@@ -69,6 +85,16 @@ class Player(models.Model):
                 r_num = random.randint(0, 100)
                 self.slug = slugify(''.join(self.nickname, str(r_num)))
                 return super(Player, self).save(*args, **kwargs)
+    
+    def get_remote_image(self):
+        base_name = os.path.basename(self.image.url)
+        base_file_name = os.path.basename(self.image_url)
+        base_url = settings.MEDIA_ROOT
+        if self.image_url and (base_name != 'avatar.svg' and base_name != base_file_name):
+            img_temp = NamedTemporaryFile(delete=True)
+            img_temp.write(urlopen(self.image_url).read())
+            img_temp.flush()
+            self.image.save(f"{base_file_name}", File(img_temp))
 
     @property
     def get_age(self):
